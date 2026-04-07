@@ -155,7 +155,7 @@ def run_task(task_name: str) -> dict:
         final_score = step_data.get("info", {}).get("best_score", score)
 
         print(
-            f"[STEP] step={step_num} reward={score:.2f} done={'true' if done else 'false'}",
+            f"[STEP] step={step_num} action={review[:50]}... reward={score:.2f} done={'true' if done else 'false'}",
             flush=True
         )
 
@@ -168,7 +168,7 @@ def run_task(task_name: str) -> dict:
     rewards_str = ",".join(f"{r:.2f}" for r in step_rewards)
 
     print(
-        f"[END] success={'true' if success else 'false'} steps={step_num} score={final_score:.2f} rewards={rewards_str}",
+        f"[END] success={'true' if success else 'false'} steps={step_num} score={final_score:.3f} rewards={rewards_str}",
         flush=True
     )
 
