@@ -1,0 +1,67 @@
+name: code-review-env
+version: "1.0.0"
+description: >
+  An OpenEnv environment where AI agents act as code reviewers.
+  The agent reads code snippets and must identify bugs, security vulnerabilities,
+  bad practices, and logic errors. Tasks range from obvious bugs to subtle
+  security issues like SQL injection.
+
+author: naveen877
+tags:
+  - openenv
+  - code-review
+  - software-engineering
+  - security
+  - real-world
+
+tasks:
+  - name: easy_bug
+    difficulty: easy
+    description: "Find the obvious division-by-zero bug in a simple average calculator."
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+
+  - name: medium_bug
+    difficulty: medium
+    description: "Identify multiple issues including uninitialized variable and bad boolean comparison."
+    max_steps: 5
+    reward_range: [0.0, 1.0]
+
+  - name: hard_bug
+    difficulty: hard
+    description: "Find SQL injection vulnerability, resource leak, and logic bug in duplicate finder."
+    max_steps: 8
+    reward_range: [0.0, 1.0]
+
+observation_space:
+  type: object
+  fields:
+    task_name: string
+    difficulty: string
+    description: string
+    code_snippet: string
+    step_number: integer
+    max_steps: integer
+    done: boolean
+    last_reward: float
+    message: string
+
+action_space:
+  type: object
+  fields:
+    review: string
+
+reward:
+  type: float
+  range: [0.0, 1.0]
+  description: >
+    Score based on how many key issues the agent identified in the code.
+    Partial credit given for finding some but not all issues.
+    Improvement reward for refining reviews across steps.
+
+api:
+  reset: POST /reset
+  step: POST /step
+  state: GET /state
+  tasks: GET /tasks
+  health: GET /health
