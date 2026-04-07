@@ -114,4 +114,10 @@ def list_tasks():
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=7860, reload=False)
+    main()
+
+
+def main():
+    """Main entry point for the OpenEnv server."""
+    import uvicorn
+    uvicorn.run("server.app:app", host="0.0.0.0", port=7860, reload=False)
