@@ -31,11 +31,11 @@ def get_env(task_name: str) -> CodeReviewEnv:
 # ── Request Models ────────────────────────────────────────────────────────────
 
 class ResetRequest(BaseModel):
-    task_name: str = "easy_bug"
+    task_name: Optional[str] = "easy_bug"
 
 
 class StepRequest(BaseModel):
-    task_name: str = "easy_bug"
+    task_name: Optional[str] = "easy_bug"
     review: str
 
 
