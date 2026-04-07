@@ -154,10 +154,7 @@ def run_task(task_name: str) -> dict:
         step_rewards.append(round(score, 2))
         final_score = step_data.get("info", {}).get("best_score", score)
 
-        print(
-            f"[STEP] step={step_num} action={review[:50]}... reward={score:.2f} done={'true' if done else 'false'}",
-            flush=True
-        )
+        print(f"[STEP]  step={step_num} action={review[:50].replace(chr(10), ' ')} reward={score:.4f} done={str(done).lower()}", flush=True)
 
         history.append({"review": review, "feedback": feedback})
 
