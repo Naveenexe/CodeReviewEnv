@@ -1,0 +1,37 @@
+version = 4
+requires-python = ">=3.8"
+
+[[package]]
+name = "fastapi"
+version = "0.95.2"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "uvicorn"
+version = "0.20.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "pydantic"
+version = "2.0.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "openai"
+version = "1.0.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "requests"
+version = "2.28.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "pyyaml"
+version = "6.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
+
+[[package]]
+name = "openenv"
+version = "0.2.0"
+source = { type = "registry", url = "https://pypi.org/simple" }
