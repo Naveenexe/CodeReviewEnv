@@ -125,7 +125,7 @@ dup = find_first_duplicate([1, 2, 3, 2, 1])
 def grade_response(task_name: str, response: str) -> float:
     """
     Grade the agent's response for a given task.
-    Returns a score between 0.0 and 1.0.
+    Returns a score strictly between 0 and 1 (exclusive).
     Partial credit for finding some issues, full credit for finding all key issues.
     """
     task = TASKS[task_name]
@@ -140,11 +140,12 @@ def grade_response(task_name: str, response: str) -> float:
     if task_name == "easy_bug":
         # Only one main issue — binary-ish but partial for mentioning "empty" vs full explanation
         if matched >= 2:
-            return 1.0
+            score = 0.99  # Perfect, but not exactly 1.0
         elif matched == 1:
-            return 0.5
+            score = 0.5
         else:
-            return 0.0
+            score = 0.01  # No issues found, but not exactly 0.0
+        return score
 
     elif task_name == "medium_bug":
         # 3 main issues — score proportionally
@@ -159,7 +160,10 @@ def grade_response(task_name: str, response: str) -> float:
                 if keyword in response_lower:
                     found_groups += 1
                     break
-        return round(found_groups / len(key_groups), 2)
+        # Map 0/3=0.0, 1/3≈0.33, 2/3≈0.67, 3/3=1.0 to (0,1) range
+        base_score = round(found_groups / len(key_groups), 2)
+        # Shift into (0, 1): 0.01 + base_score * 0.98
+        return round(0.01 + base_score * 0.98, 2)
 
     elif task_name == "hard_bug":
         # 3 key issue areas — SQL injection, connection leak, duplicate logic bug
@@ -179,8 +183,9 @@ def grade_response(task_name: str, response: str) -> float:
 
         # Bonus for mentioning inefficiency
         if any(k in response_lower for k in ["o(n^2)", "inefficient", "nested loop"]):
-            base_score = min(1.0, base_score + 0.1)
+            base_score = min(0.98, base_score + 0.1)  # Cap at 0.98, not 1.0
 
-        return base_score
+        # Shift into (0, 1): 0.01 + base_score * 0.98
+        return round(0.01 + base_score * 0.98, 2)
 
-    return 0.0
+    return 0.01  # Fallback: not exactly 0.0
